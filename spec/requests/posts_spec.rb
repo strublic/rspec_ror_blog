@@ -96,6 +96,27 @@ RSpec.describe "Posts", type: :request do
         expect(response).to have_http_status(:success)
       end
     end
+  end
 
+  describe "delete post" do
+    let(:post) { create(:post) }
+
+    it "successfully deletes the post" do
+      # expect do
+      #   delete post_path(post)
+      # end.to change { Post.count }.from(1).to(0)
+
+      # delete post_path(post)
+      # expect { Post.find(post.id) }.to raise_error(ActiveRecord::RecordNotFound)
+
+      # expect { post.save }.to change{ Post.all.size }.by(1)
+      
+      post.save
+      expect do
+        delete post_path(post)
+      end.to change { Post.count }.from(1).to(0)
+
+      expect(response).to have_http_status(:redirect)
+    end
   end
 end
